@@ -9,10 +9,26 @@
              d:DesignHeight="300" d:DesignWidth="300"
              Name="AbpHelper">
     <Grid>
-    <TabControl>
-        <TabItem Header="Add ApplicationService Methods">
-           <Button Name="button1" Content="Add" Click="button1_Click"></Button>
-        </TabItem>
-    </TabControl>
+        <TabControl>
+            <TabItem Header="Generate ApplicationService Methods">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition />
+                        <RowDefinition Height="Auto" />
+                    </Grid.RowDefinitions>
+                    <GroupBox Grid.Row="0" Header="Method Names" Margin="3">
+                        <TextBox AcceptsReturn="True" VerticalScrollBarVisibility="Auto" />
+                    </GroupBox>
+                    <Grid Grid.Row="1">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition />
+                            <ColumnDefinition />
+                        </Grid.ColumnDefinitions>
+                        <CheckBox Grid.Column="0" Content="Async Methods" Margin="3" VerticalAlignment="Center" />
+                        <Button Grid.Column="1" Content="Generate" HorizontalAlignment="Right" Margin="3" VerticalAlignment="Center" />
+                    </Grid>
+                </Grid>
+            </TabItem>
+        </TabControl>
     </Grid>
 </UserControl>
