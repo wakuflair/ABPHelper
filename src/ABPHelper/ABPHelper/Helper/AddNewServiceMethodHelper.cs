@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Reflection;
@@ -13,39 +14,57 @@ namespace ABPHelper.Helper
         private const string ErrMessage = "请在实现了IApplicationService接口的类中使用此功能";
         private const string InterfaceName = "Abp.Application.Services.IApplicationService";
         private readonly DTE2 _dte;
+        private CodeClass _serviceClass;
+        private CodeInterface _serviceInterface;
+        private Document _document;
 
         public AddNewServiceMethodHelper(IServiceProvider serviceProvider) : base(serviceProvider)
         {
             _dte = ServiceProvider.GetService(typeof (DTE)) as DTE2;
         }
 
-        public override void Execute()
+        public override bool CanExecute(IDictionary<string, object> parameter)
         {
-            var document = _dte.ActiveDocument;
-            if (document == null || document.ProjectItem == null || document.ProjectItem.FileCodeModel == null)
+            _document = _dte.ActiveDocument;
+            if (_document == null || _document.ProjectItem == null || _document.ProjectItem.FileCodeModel == null)
             {
                 MessageBox(ErrMessage);
-                return;
+                return false;
             }
 
-            var serviceClass = GetClass(document.ProjectItem.FileCodeModel.CodeElements);
-            if (serviceClass == null)
+            _serviceClass = GetClass(_document.ProjectItem.FileCodeModel.CodeElements);
+            if (_serviceClass == null)
             {
                 MessageBox(ErrMessage);
-                return;
+                return false;
             }
 
-            var serviceInterface = GetServiceInterface(serviceClass as CodeElement);
-            if (serviceInterface == null)
+            _serviceInterface = GetServiceInterface(_serviceClass as CodeElement);
+            if (_serviceInterface == null)
             {
                 MessageBox(ErrMessage);
-                return;
+                return false;
             }
+            return true;
+        }
 
-            string name = "TestMethod";
-            AddMethodToClass(serviceClass, name);
-            AddMethodToInterface(serviceInterface, name);
-            CreateDtoFiles(document, name);
+        public override void Execute(IDictionary<string, object> parameter)
+        {
+            string[] names = (string[]) parameter["names"];
+            bool async = (bool) parameter["async"];
+            foreach (string name in names)
+            {
+                try
+                {
+                    AddMethodToClass(_serviceClass, name, async);
+                    AddMethodToInterface(_serviceInterface, name, async);
+                    CreateDtoFiles(_document, name);
+                }
+                catch (Exception e)
+                {
+                    MessageBox("Generation failed.\r\nMethod name: {0}\r\nException: {1}", MessageBoxButton.OK, MessageBoxImage.Exclamation, name, e.Message);
+                }
+            }
         }
 
         private CodeClass GetClass(CodeElements codeElements)
@@ -103,20 +122,23 @@ namespace ABPHelper.Helper
             return null;
         }
 
-        private void AddMethodToClass(CodeClass serviceClass, string name)
+        private void AddMethodToClass(CodeClass serviceClass, string name, bool async)
         {
             string parameter = string.Format("{0}Input", name);
-            string returnName = string.Format("Task<{0}Output>", name);
+            var returnName = string.Format(async ? "Task<{0}Output>" : "{0}Output", name);
             var function = serviceClass.AddFunction(name, vsCMFunction.vsCMFunctionFunction, returnName, -1, vsCMAccess.vsCMAccessPublic);
             function.AddParameter("input", parameter);
-            function.StartPoint.CreateEditPoint().ReplaceText(6, "public async", (int) vsEPReplaceTextOptions.vsEPReplaceTextAutoformat);
+            if (async)
+            {
+                function.StartPoint.CreateEditPoint().ReplaceText(6, "public async", (int) vsEPReplaceTextOptions.vsEPReplaceTextAutoformat);
+            }
             function.GetStartPoint(vsCMPart.vsCMPartBody).CreateEditPoint().ReplaceText(0, "throw new System.NotImplementedException();", (int) vsEPReplaceTextOptions.vsEPReplaceTextAutoformat);
         }
 
-        private void AddMethodToInterface(CodeInterface serviceInterface, string name)
+        private void AddMethodToInterface(CodeInterface serviceInterface, string name, bool async)
         {
             string parameter = string.Format("{0}Input", name);
-            string returnName = string.Format("Task<{0}Output>", name);
+            var returnName = string.Format(async ? "Task<{0}Output>" : "{0}Output", name);
             var function = serviceInterface.AddFunction(name, vsCMFunction.vsCMFunctionFunction, returnName, -1);
             function.AddParameter("input", parameter);
         }

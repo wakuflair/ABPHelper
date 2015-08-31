@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Windows;
 
 namespace ABPHelper.Helper
@@ -12,11 +13,12 @@ namespace ABPHelper.Helper
             ServiceProvider = serviceProvider;
         }
 
-        public abstract void Execute();
+        public abstract bool CanExecute(IDictionary<string, object> parameter);
+        public abstract void Execute(IDictionary<string, object> parameter);
 
-        protected MessageBoxResult MessageBox(string message, MessageBoxButton button = MessageBoxButton.OK, MessageBoxImage icon = MessageBoxImage.Information)
+        public static MessageBoxResult MessageBox(string message, MessageBoxButton button = MessageBoxButton.OK, MessageBoxImage icon = MessageBoxImage.Information, params object[] parameters)
         {
-            return System.Windows.MessageBox.Show(message, "ABPHelper", button, icon);
+            return System.Windows.MessageBox.Show(string.Format(message, parameters), "ABPHelper", button, icon);
         }
     }
 }

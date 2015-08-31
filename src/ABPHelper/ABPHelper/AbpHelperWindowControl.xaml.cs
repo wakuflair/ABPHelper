@@ -6,6 +6,8 @@
 
 
 using System;
+using System.Collections.Generic;
+using System.Text.RegularExpressions;
 using ABPHelper.Helper;
 using Microsoft.VisualStudio.Shell;
 
@@ -31,17 +33,23 @@ namespace ABPHelper
             _serviceProvider = serviceProvider;
         }
 
-        /// <summary>
-        /// Handles click on the button by displaying a message box.
-        /// </summary>
-        /// <param name="sender">The event sender.</param>
-        /// <param name="e">The event args.</param>
-        [SuppressMessage("Microsoft.Globalization", "CA1300:SpecifyMessageBoxOptions", Justification = "Sample code")]
-        [SuppressMessage("StyleCop.CSharp.NamingRules", "SA1300:ElementMustBeginWithUpperCaseLetter", Justification = "Default event handler naming pattern")]
-        private void button1_Click(object sender, RoutedEventArgs e)
+        private void Generate_OnClick(object sender, RoutedEventArgs e)
         {
             var helper = new AddNewServiceMethodHelper(_serviceProvider);
-            helper.Execute();
+            var parameter = new Dictionary<string, object>();
+            var names = Regex.Split(txtNames.Text, @"\r\n");
+
+            if (HelperBase.MessageBox("{0} method{1} will be generated. OK?", MessageBoxButton.OKCancel, MessageBoxImage.Question, names.Length, (names.Length > 1 ? "s" : string.Empty)) == MessageBoxResult.Cancel)
+            {
+                return;
+            }
+            parameter["names"] = names;
+            parameter["async"] = chkAsync.IsChecked;
+
+            if (helper.CanExecute(parameter))
+            {
+                helper.Execute(parameter);
+            }
         }
     }
 }
