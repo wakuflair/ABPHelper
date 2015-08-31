@@ -76,7 +76,10 @@
       <ResourceName>Menus.ctmenu</ResourceName>
     </VSCTCompile>
     <Content Include="index.html" />
-    <Content Include="Resources\AbpHelperWindowCommand.png" />
+    <Content Include="Resources\AbpHelperWindowCommand.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <IncludeInVSIX>true</IncludeInVSIX>
+    </Content>
     <Content Include="Resources\AbpHelperWindowPackage.ico" />
     <Content Include="stylesheet.css" />
   </ItemGroup>
