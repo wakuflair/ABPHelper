@@ -2,7 +2,7 @@
 ABPHelper is a Visual Studio Extension(VSIX) that helps you with developing ASP.NET Boilerplate applications.
 
 ## Installation
-You can install **ABPHelper** by using **Extensions and Updates** in Visual Studio. Or downloading [ABPHelper.vsix](https://visualstudiogallery.msdn.microsoft.com/15d33189-e63e-4ab4-9269-bc43200d7836 "ABPHelper.vsix") file and install manullay.
+You can install **ABPHelper** by using **Extensions and Updates** in Visual Studio. Or download it from [Visual Studio Gallary](https://visualstudiogallery.msdn.microsoft.com/15d33189-e63e-4ab4-9269-bc43200d7836) and install it manullay.
 
 ## Using
 Once you installed **ABPHelper**, you can find it in **Views**->**Other Windows**->**ABPHelper**, or using shortcut `CTRL+B, CTRL+H` to show it.
