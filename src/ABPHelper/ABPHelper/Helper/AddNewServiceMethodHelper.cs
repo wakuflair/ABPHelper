@@ -11,7 +11,7 @@ namespace ABPHelper.Helper
 {
     public class AddNewServiceMethodHelper : HelperBase
     {
-        private const string ErrMessage = "请在实现了IApplicationService接口的类中使用此功能";
+        private const string ErrMessage = "Please run in the class that implements IApplicationService interface.";
         private const string InterfaceName = "Abp.Application.Services.IApplicationService";
         private readonly DTE2 _dte;
         private CodeClass _serviceClass;
