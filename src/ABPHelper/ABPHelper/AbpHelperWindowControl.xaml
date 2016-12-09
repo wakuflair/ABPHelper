@@ -24,7 +24,7 @@
                             <ColumnDefinition />
                             <ColumnDefinition />
                         </Grid.ColumnDefinitions>
-                        <CheckBox Grid.Column="0" Content="Async Methods" Margin="3" VerticalAlignment="Center" x:Name="chkAsync" />
+                        <CheckBox Grid.Column="0" Content="Async Methods" Margin="3" VerticalAlignment="Center" x:Name="chkAsync" IsChecked="True" />
                         <Button Grid.Column="1" Content="Generate" HorizontalAlignment="Right" Margin="3" VerticalAlignment="Center" x:Name="Generate" Click="Generate_OnClick" />
                     </Grid>
                 </Grid>

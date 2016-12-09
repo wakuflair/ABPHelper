@@ -2,7 +2,7 @@
 
 namespace {0}.Dto
 {{
-	public class {1}{2} : I{2}Dto
+	public class {1}{2} 
 	{{
 	}}
 }}
