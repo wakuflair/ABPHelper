@@ -99,7 +99,7 @@ namespace ABPHelper.Helper
             }
             else
             {
-                throw new ArgumentException("The parameter element is not Class nor Interface");
+                throw new ArgumentException("The parameter element is neither Class nor Interface");
             }
             var baseInterfaces = elements.Cast<CodeElement>()
                 .Where(codeElement => codeElement.Kind == vsCMElement.vsCMElementInterface)
