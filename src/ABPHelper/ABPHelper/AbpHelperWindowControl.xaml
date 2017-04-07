@@ -3,6 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:views="clr-namespace:ABPHelper.Views"
              Background="{DynamicResource VsBrush.Window}"
              Foreground="{DynamicResource VsBrush.WindowText}"
              mc:Ignorable="d"
@@ -11,23 +12,7 @@
     <Grid>
         <TabControl>
             <TabItem Header="Generate ApplicationService Methods">
-                <Grid>
-                    <Grid.RowDefinitions>
-                        <RowDefinition />
-                        <RowDefinition Height="Auto" />
-                    </Grid.RowDefinitions>
-                    <GroupBox Grid.Row="0" Header="Method Names" Margin="3">
-                        <TextBox AcceptsReturn="True" VerticalScrollBarVisibility="Auto" x:Name="txtNames" />
-                    </GroupBox>
-                    <Grid Grid.Row="1">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition />
-                            <ColumnDefinition />
-                        </Grid.ColumnDefinitions>
-                        <CheckBox Grid.Column="0" Content="Async Methods" Margin="3" VerticalAlignment="Center" x:Name="chkAsync" IsChecked="True" />
-                        <Button Grid.Column="1" Content="Generate" HorizontalAlignment="Right" Margin="3" VerticalAlignment="Center" x:Name="Generate" Click="Generate_OnClick" />
-                    </Grid>
-                </Grid>
+                <views:AddNewServiceMethod/>
             </TabItem>
         </TabControl>
     </Grid>

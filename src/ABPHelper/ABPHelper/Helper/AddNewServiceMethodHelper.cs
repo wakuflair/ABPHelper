@@ -146,7 +146,7 @@ namespace ABPHelper.Helper
         private void CreateDtoFiles(Document document, string name)
         {
             var location = Assembly.GetExecutingAssembly().Location;
-            string templateFile = Path.Combine(Path.GetDirectoryName(location), "Templates", "Template.txt");
+            string templateFile = Path.Combine(Path.GetDirectoryName(location), "Templates", "DtoTemplate.txt");
             string template = File.ReadAllText(templateFile);
 
             var parentItem = document.ProjectItem.Collection.Parent as ProjectItem;
