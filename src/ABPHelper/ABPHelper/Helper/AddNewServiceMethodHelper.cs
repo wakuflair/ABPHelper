@@ -4,8 +4,11 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Windows;
+using ABPHelper.Models;
 using EnvDTE;
 using EnvDTE80;
+using RazorEngine.Templating;
+using Engine = RazorEngine.Engine;
 
 namespace ABPHelper.Helper
 {
@@ -26,7 +29,7 @@ namespace ABPHelper.Helper
         public override bool CanExecute(IDictionary<string, object> parameter)
         {
             _document = _dte.ActiveDocument;
-            if (_document == null || _document.ProjectItem == null || _document.ProjectItem.FileCodeModel == null)
+            if (_document?.ProjectItem?.FileCodeModel == null)
             {
                 MessageBox(ErrMessage);
                 return false;
@@ -124,7 +127,7 @@ namespace ABPHelper.Helper
 
         private void AddMethodToClass(CodeClass serviceClass, string name, bool async)
         {
-            string parameter = string.Format("{0}Input", name);
+            string parameter = $"{name}Input";
             var returnName = string.Format(async ? "Task<{0}Output>" : "{0}Output", name);
             var function = serviceClass.AddFunction(name, vsCMFunction.vsCMFunctionFunction, returnName, -1, vsCMAccess.vsCMAccessPublic);
             function.AddParameter("input", parameter);
@@ -137,7 +140,7 @@ namespace ABPHelper.Helper
 
         private void AddMethodToInterface(CodeInterface serviceInterface, string name, bool async)
         {
-            string parameter = string.Format("{0}Input", name);
+            string parameter = $"{name}Input";
             var returnName = string.Format(async ? "Task<{0}Output>" : "{0}Output", name);
             var function = serviceInterface.AddFunction(name, vsCMFunction.vsCMFunctionFunction, returnName, -1);
             function.AddParameter("input", parameter);
@@ -145,10 +148,6 @@ namespace ABPHelper.Helper
 
         private void CreateDtoFiles(Document document, string name)
         {
-            var location = Assembly.GetExecutingAssembly().Location;
-            string templateFile = Path.Combine(Path.GetDirectoryName(location), "Templates", "DtoTemplate.txt");
-            string template = File.ReadAllText(templateFile);
-
             var parentItem = document.ProjectItem.Collection.Parent as ProjectItem;
             var dtoFolder = parentItem.ProjectItems.Cast<ProjectItem>().FirstOrDefault(item => item.Name == "Dto");
             if (dtoFolder == null)
@@ -161,8 +160,9 @@ namespace ABPHelper.Helper
             Directory.CreateDirectory(path);
             foreach (var str in new[] {"Input", "Output"})
             {
-                string content = string.Format(template, nameSpace, name, str);
-                string file = Path.Combine(path, string.Format("{0}{1}.cs", name, str));
+                var dtoModel = new DtoModel() {Namespace = nameSpace, Name = name, InputOrOutput = str};
+                string content = Engine.Razor.RunCompile("DtoTemplate", null, dtoModel);
+                string file = Path.Combine(path, $"{name}{str}.cs");
                 try
                 {
                     File.WriteAllText(file, content);
