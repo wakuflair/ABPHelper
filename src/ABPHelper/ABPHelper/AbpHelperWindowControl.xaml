@@ -11,6 +11,9 @@
              Name="AbpHelper">
     <Grid>
         <TabControl>
+            <TabItem Header="Generate Business">
+                <views:AddNewBusiness/>
+            </TabItem>
             <TabItem Header="Generate ApplicationService Methods">
                 <views:AddNewServiceMethod/>
             </TabItem>

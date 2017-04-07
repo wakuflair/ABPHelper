@@ -57,13 +57,24 @@
       <DependentUpon>AbpHelperWindowControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="AbpHelperWindowPackage.cs" />
+    <Compile Include="Helper\AddNewBusinessHelper.cs" />
     <Compile Include="Helper\AddNewServiceMethodHelper.cs" />
     <Compile Include="Helper\HelperBase.cs" />
-    <Compile Include="Models\DtoModel.cs" />
+    <Compile Include="ItemType.cs" />
+    <Compile Include="Models\HelperModels\AddNewBusinessModel.cs" />
+    <Compile Include="Models\HelperModels\AddNewServiceMethodModel.cs" />
+    <Compile Include="Models\TemplateModels\ServiceFileModel.cs" />
+    <Compile Include="Models\TemplateModels\DtoModel.cs" />
+    <Compile Include="Models\TemplateModels\ServiceInterfaceFileModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="Templates\DtoTemplate.cshtml" />
     <Compile Include="Templates\Template.cs" />
+    <Compile Include="Utils.cs" />
+    <Compile Include="ViewModels\AddNewBusinessViewModel.cs" />
     <Compile Include="ViewModels\AddNewServiceMethodViewModel.cs" />
+    <Compile Include="Views\AddNewBusiness.xaml.cs">
+      <DependentUpon>AddNewBusiness.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\AddNewServiceMethod.xaml.cs">
       <DependentUpon>AddNewServiceMethod.xaml</DependentUpon>
     </Compile>
@@ -74,6 +85,8 @@
     <None Include="source.extension.vsixmanifest">
       <SubType>Designer</SubType>
     </None>
+    <EmbeddedResource Include="Templates\ServiceFileTemplate.cshtml" />
+    <EmbeddedResource Include="Templates\ServiceInterfaceFileTemplate.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <VSCTCompile Include="AbpHelperWindowPackage.vsct">
@@ -89,6 +102,10 @@
   </ItemGroup>
   <ItemGroup>
     <Page Include="AbpHelperWindowControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\AddNewBusiness.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

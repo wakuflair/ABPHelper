@@ -1,0 +1,9 @@
+﻿@inherits RazorEngine.Templating.TemplateBase<ABPHelper.Models.TemplateModels.ServiceInterfaceFileModel>
+using Abp.Application.Services;
+
+namespace @Model.Namespace
+{
+    public interface I@(Model.InterfaceName) : IApplicationService
+    {
+    }
+}

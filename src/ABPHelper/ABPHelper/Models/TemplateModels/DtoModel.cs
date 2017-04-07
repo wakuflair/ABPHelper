@@ -1,4 +1,4 @@
-﻿namespace ABPHelper.Models
+﻿namespace ABPHelper.Models.TemplateModels
 {
     public class DtoModel
     {
@@ -7,6 +7,5 @@
         public string Name { get; set; }
 
         public string InputOrOutput { get; set; }
-         
     }
 }
