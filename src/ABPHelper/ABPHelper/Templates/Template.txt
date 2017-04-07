@@ -1,6 +1,4 @@
-﻿using Abp.Application.Services.Dto;
-
-namespace {0}.Dto
+﻿namespace {0}.Dto
 {{
 	public class {1}{2} 
 	{{
