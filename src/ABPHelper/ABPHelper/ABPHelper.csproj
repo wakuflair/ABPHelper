@@ -69,7 +69,7 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Templates\Template.txt">
+    <Content Include="Templates\DtoTemplate.txt">
       <IncludeInVSIX>true</IncludeInVSIX>
     </Content>
     <VSCTCompile Include="AbpHelperWindowPackage.vsct">
