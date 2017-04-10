@@ -45,7 +45,7 @@
                         continue;
                     }
             <text>
-            function open@(UpperFirstChar(viewFileViewModel.FileName))() {
+            vm.open@(UpperFirstChar(viewFileViewModel.FileName)) = function() {
                 var modalInstance = $uibModal.open({
                     templateUrl: '@("/" + Model.ViewFolder.Replace('\\', '/') + "/" + viewFileViewModel.FileName + ".cshtml")',
                     controller: '@(Model.Namespace + "." + viewFileViewModel.FileName) as vm',
