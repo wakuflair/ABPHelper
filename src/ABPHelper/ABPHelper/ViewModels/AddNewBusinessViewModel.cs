@@ -1,5 +1,7 @@
 ﻿using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Windows;
+using ABPHelper.Extensions;
 using ABPHelper.Helper;
 using ABPHelper.Models;
 using ABPHelper.Models.HelperModels;
@@ -11,11 +13,63 @@ namespace ABPHelper.ViewModels
 {
     public class AddNewBusinessViewModel : ViewModelBase
     {
+        public class ViewFileViewModel : ObservableObject
+        {
+            #region FileName 属性
+
+            private string _fileName;
+
+            /// <summary>
+            /// 设置或取得 FileName 属性
+            /// 更改属性值并引发PropertyChanged事件
+            /// </summary>
+            public string FileName
+            {
+                get { return _fileName; }
+
+                set
+                {
+                    if (Set(ref _fileName, value))
+                    {
+                    }
+                }
+            }
+
+            #endregion
+
+            #region IsPopup 属性
+
+            private bool _isPopup;
+
+            /// <summary>
+            /// 设置或取得 IsPopup 属性
+            /// 更改属性值并引发PropertyChanged事件
+            /// </summary>
+            public bool IsPopup
+            {
+                get { return _isPopup; }
+
+                set
+                {
+                    if (Set(ref _isPopup, value))
+                    {
+                    }
+                }
+            }
+
+            #endregion
+        }
+
         public AddNewBusinessViewModel()
         {
 #if DEBUG
             BusinessName = "Contract";
 #endif
+            ViewFiles = new ObservableCollection<ViewFileViewModel>(new List<ViewFileViewModel>
+            {
+                new ViewFileViewModel {FileName = "index", IsPopup = false},
+                new ViewFileViewModel {FileName = "createOrEditModal", IsPopup = true},
+            });
         }
 
         #region BusinessName 属性
@@ -37,6 +91,7 @@ namespace ABPHelper.ViewModels
                     ServiceFolder = BusinessName + "s";
                     ServiceInterfaceName = $"I{BusinessName}AppService";
                     ServiceName = $"{BusinessName}AppService";
+                    ViewFolder = $@"App\Main\views\{ServiceFolder.LowerFirstChar()}";
                 }
             }
         }
@@ -109,6 +164,50 @@ namespace ABPHelper.ViewModels
 
         #endregion
 
+        #region ViewFolder 属性
+
+        private string _viewFolder;
+
+        /// <summary>
+        /// 设置或取得 ViewFolder 属性
+        /// 更改属性值并引发PropertyChanged事件
+        /// </summary>
+        public string ViewFolder
+        {
+            get { return _viewFolder; }
+
+            set
+            {
+                if (Set(ref _viewFolder, value))
+                {
+                }
+            }
+        }
+
+        #endregion
+
+        #region ViewFiles 属性
+
+        private ObservableCollection<ViewFileViewModel> _viewFiles;
+
+        /// <summary>
+        /// 设置或取得 ViewFiles 属性
+        /// 更改属性值并引发PropertyChanged事件
+        /// </summary>
+        public ObservableCollection<ViewFileViewModel> ViewFiles
+        {
+            get { return _viewFiles; }
+
+            set
+            {
+                if (Set(ref _viewFiles, value))
+                {
+                }
+            }
+        }
+
+        #endregion
+
         #region GenerateCommand 命令 
 
         private RelayCommand _generateCommand;
@@ -134,6 +233,8 @@ namespace ABPHelper.ViewModels
                 ServiceFolder = ServiceFolder,
                 ServiceInterfaceName = ServiceInterfaceName,
                 ServiceName = ServiceName,
+                ViewFolder = ViewFolder,
+                ViewFiles = ViewFiles,
             };
             if (helper.CanExecute(parameter))
             {

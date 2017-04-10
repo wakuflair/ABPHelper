@@ -153,8 +153,8 @@ namespace ABPHelper.Helper
             string nameSpace = GetNamespace(document.ProjectItem);
             foreach (var str in new[] {"Input", "Output"})
             {
-                var model = new DtoModel() {Namespace = nameSpace, Name = name, InputOrOutput = str};
-                string content = Engine.Razor.RunCompile("DtoTemplate", null, model);
+                var model = new DtoFileModel() {Namespace = nameSpace, Name = name, InputOrOutput = str};
+                string content = Engine.Razor.RunCompile("DtoTemplate", typeof(DtoFileModel), model);
                 string fileName = $"{name}{str}.cs";
                 try
                 {

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
 using System.Windows;
+using ABPHelper.Extensions;
 using ABPHelper.Models;
 using ABPHelper.Models.HelperModels;
 using ABPHelper.Models.TemplateModels;
@@ -63,6 +64,8 @@ namespace ABPHelper.Helper
                 AddDeepFolder(folder.ProjectItems, "Dto");
                 CreateServiceFile(parameter, folder);
                 CreateServiceInterfaceFile(parameter, folder);
+                folder = AddDeepFolder(_webProj.ProjectItems, parameter.ViewFolder);
+                CreateViewFiles(parameter, folder);
 
                 Utils.MessageBox("Done!");
             }
@@ -71,6 +74,33 @@ namespace ABPHelper.Helper
                 Utils.MessageBox("Generation failed.\r\nException: {0}", MessageBoxButton.OK, MessageBoxImage.Exclamation, e.Message);
             }
         }
+
+        private void CreateViewFiles(AddNewBusinessModel parameter, ProjectItem folder)
+        {
+            foreach (var viewFileViewModel in parameter.ViewFiles)
+            {
+                var model = new ViewFileModel()
+                {
+                    BusinessName = parameter.BusinessName,
+                    Namespace = GetNamespace(parameter.ViewFolder),
+                    FileName = viewFileViewModel.FileName,
+                    IsPopup = viewFileViewModel.IsPopup,
+                };
+                foreach (var ext in new[] { ".cshtml", ".js" })
+                {
+                    var fileName = viewFileViewModel.FileName + ext;
+                    if (FindProjectItem(folder, fileName, ItemType.PhysicalFile) != null) continue;
+                    string content = Engine.Razor.RunCompile(ext == ".cshtml" ? "CshtmlTemplate" : "JsTemplate", typeof(ViewFileModel), model);
+                    CreateAndAddFile(folder, fileName, content);
+                }
+            }
+        }
+
+        private string GetNamespace(string viewFolder)
+        {
+            return string.Join(".", viewFolder.Split('\\').Select(s => s.LowerFirstChar()));
+        }
+
 
         private void CreateServiceFile(AddNewBusinessModel parameter, ProjectItem folder)
         {
@@ -83,7 +113,7 @@ namespace ABPHelper.Helper
                 InterfaceName = parameter.ServiceInterfaceName,
                 ServiceName = parameter.ServiceName,
             };
-            string content = Engine.Razor.RunCompile("ServiceFileTemplate", null, model);
+            string content = Engine.Razor.RunCompile("ServiceFileTemplate", typeof(ServiceFileModel), model);
             CreateAndAddFile(folder, fileName, content);
         }
 
@@ -96,7 +126,7 @@ namespace ABPHelper.Helper
                 Namespace = GetNamespace(parameter, folder),
                 InterfaceName = parameter.ServiceInterfaceName,
             };
-            string content = Engine.Razor.RunCompile("ServiceInterfaceFileTemplate", null, model);
+            string content = Engine.Razor.RunCompile("ServiceInterfaceFileTemplate", typeof(ServiceInterfaceFileModel), model);
             CreateAndAddFile(folder, fileName, content);
         }
 

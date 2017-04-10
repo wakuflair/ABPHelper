@@ -57,6 +57,7 @@
       <DependentUpon>AbpHelperWindowControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="AbpHelperWindowPackage.cs" />
+    <Compile Include="Extensions\StringExtensions.cs" />
     <Compile Include="Helper\AddNewBusinessHelper.cs" />
     <Compile Include="Helper\AddNewServiceMethodHelper.cs" />
     <Compile Include="Helper\HelperBase.cs" />
@@ -64,8 +65,9 @@
     <Compile Include="Models\HelperModels\AddNewBusinessModel.cs" />
     <Compile Include="Models\HelperModels\AddNewServiceMethodModel.cs" />
     <Compile Include="Models\TemplateModels\ServiceFileModel.cs" />
-    <Compile Include="Models\TemplateModels\DtoModel.cs" />
+    <Compile Include="Models\TemplateModels\DtoFileModel.cs" />
     <Compile Include="Models\TemplateModels\ServiceInterfaceFileModel.cs" />
+    <Compile Include="Models\TemplateModels\ViewFileModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="Templates\DtoTemplate.cshtml" />
     <Compile Include="Templates\Template.cs" />
@@ -87,6 +89,8 @@
     </None>
     <EmbeddedResource Include="Templates\ServiceFileTemplate.cshtml" />
     <EmbeddedResource Include="Templates\ServiceInterfaceFileTemplate.cshtml" />
+    <EmbeddedResource Include="Templates\CshtmlTemplate.cshtml" />
+    <EmbeddedResource Include="Templates\JsTemplate.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <VSCTCompile Include="AbpHelperWindowPackage.vsct">

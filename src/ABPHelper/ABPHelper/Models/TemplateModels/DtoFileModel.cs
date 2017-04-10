@@ -1,6 +1,6 @@
 ﻿namespace ABPHelper.Models.TemplateModels
 {
-    public class DtoModel
+    public class DtoFileModel
     {
         public string Namespace { get; set; }
 

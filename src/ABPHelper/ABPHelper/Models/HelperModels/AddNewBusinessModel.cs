@@ -1,4 +1,7 @@
-﻿namespace ABPHelper.Models.HelperModels
+﻿using System.Collections.Generic;
+using ABPHelper.ViewModels;
+
+namespace ABPHelper.Models.HelperModels
 {
     public class AddNewBusinessModel
     {
@@ -9,5 +12,9 @@
         public string ServiceInterfaceName { get; set; }
 
         public string ServiceName { get; set; }
+
+        public string ViewFolder { get; set; }
+
+        public IEnumerable<AddNewBusinessViewModel.ViewFileViewModel> ViewFiles { get; set; }
     }
 }

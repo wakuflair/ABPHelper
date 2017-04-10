@@ -1,0 +1,34 @@
+﻿@inherits RazorEngine.Templating.TemplateBase<ABPHelper.Models.TemplateModels.ViewFileModel>
+@{
+    var busiName = Model.BusinessName.Substring(0, 1).ToLower() + Model.BusinessName.Substring(1);
+}@if (Model.IsPopup)
+{
+<div>
+    <form name="@(Model.FileName)Form" role="form" novalidate class="form-validation">
+        <div class="modal-header">
+            <h4 class="modal-title">
+                <span>TITLE</span>
+            </h4>
+        </div>
+        <div class="modal-body">
+            <!-- Add Fields Here -->
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-default" ng-click="vm.cancel()">@@L("Cancel")</button>
+            <button type="submit" class="btn btn-primary blue" ng-click="vm.save()" ng-disabled="@(Model.FileName)Form.$invalid">
+                <i class="fa fa-save"></i> <span>@@L("Save")</span>
+            </button>
+        </div>
+    </form>
+</div>
+}
+else
+{
+<div ng-controller="@(Model.Namespace).@(Model.FileName) as vm">
+    <h1>@Model.BusinessName</h1>
+    <div class="row">
+        <div class="col-md-12">
+        </div>
+    </div>
+</div>
+}

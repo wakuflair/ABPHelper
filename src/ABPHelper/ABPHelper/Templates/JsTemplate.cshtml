@@ -1,0 +1,13 @@
+﻿@inherits RazorEngine.Templating.TemplateBase<ABPHelper.Models.TemplateModels.ViewFileModel>
+@{
+    var fullName = Model.Namespace + "." + Model.FileName;
+    var busiName = Model.BusinessName.Substring(0, 1).ToLower() + Model.BusinessName.Substring(1);
+    var modal = Model.IsPopup ? "$uibModalInstance" : "$uibModal";
+}(function() {
+    angular.module('app').controller('@fullName', [
+        '$scope', '@modal', 'abp.services.app.@busiName',
+        function($scope, @modal, @(busiName)Service) {
+            var vm = this;
+        }
+    ]);
+})();
