@@ -69,9 +69,7 @@
     <Compile Include="Models\TemplateModels\ServiceInterfaceFileModel.cs" />
     <Compile Include="Models\TemplateModels\ViewFileModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <EmbeddedResource Include="Templates\DtoTemplate.cshtml">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </EmbeddedResource>
+    <EmbeddedResource Include="Templates\DtoTemplate.cshtml" />
     <Compile Include="Templates\Template.cs" />
     <Compile Include="Utils.cs" />
     <Compile Include="ViewModels\AddNewBusinessViewModel.cs" />
@@ -89,18 +87,10 @@
     <None Include="source.extension.vsixmanifest">
       <SubType>Designer</SubType>
     </None>
-    <EmbeddedResource Include="Templates\ServiceFileTemplate.cshtml">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Templates\ServiceInterfaceFileTemplate.cshtml">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Templates\CshtmlTemplate.cshtml">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Templates\JsTemplate.cshtml">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </EmbeddedResource>
+    <EmbeddedResource Include="Templates\ServiceFileTemplate.cshtml" />
+    <EmbeddedResource Include="Templates\ServiceInterfaceFileTemplate.cshtml" />
+    <EmbeddedResource Include="Templates\CshtmlTemplate.cshtml" />
+    <EmbeddedResource Include="Templates\JsTemplate.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <VSCTCompile Include="AbpHelperWindowPackage.vsct">

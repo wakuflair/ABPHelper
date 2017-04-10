@@ -13,6 +13,10 @@
     <UserControl.Resources>
         <Style TargetType="TextBox">
             <Setter Property="Height" Value="20"/>
+            <Setter Property="Width" Value="300"/>
+            <Setter Property="HorizontalAlignment" Value="Left"/>
+            <Setter Property="VerticalAlignment" Value="Center"/>
+            <Setter Property="Margin" Value="5 3 3 3"/>
         </Style>
     </UserControl.Resources>
     <Grid>
@@ -24,7 +28,7 @@
         </Grid.RowDefinitions>
         <StackPanel Orientation="Horizontal" Grid.Row="0" Margin="3">
             <TextBlock Text="Business Name:" Margin="6 3" VerticalAlignment="Center"/>
-            <TextBox Margin="5 3" Width="150" Text="{Binding BusinessName, UpdateSourceTrigger=PropertyChanged}"/>
+            <TextBox Text="{Binding BusinessName, UpdateSourceTrigger=PropertyChanged}"/>
         </StackPanel>
         <GroupBox Grid.Row="1" Header="Application Service">
             <Grid>
@@ -40,9 +44,9 @@
                 <TextBlock Grid.Row="0" Grid.Column="0" Text="Folder:" VerticalAlignment="Center" HorizontalAlignment="Right"/>
                 <TextBlock Grid.Row="1" Grid.Column="0" Text="Interface File:" VerticalAlignment="Center" HorizontalAlignment="Right"/>
                 <TextBlock Grid.Row="2" Grid.Column="0" Text="Service File:" VerticalAlignment="Center" HorizontalAlignment="Right"/>
-                <TextBox Grid.Row="0" Grid.Column="1" Margin="5 3" VerticalAlignment="Center" Text="{Binding ServiceFolder, UpdateSourceTrigger=PropertyChanged}"/>
-                <TextBox Grid.Row="1" Grid.Column="1" Margin="5 3" VerticalAlignment="Center" Text="{Binding ServiceInterfaceName, UpdateSourceTrigger=PropertyChanged, StringFormat='{}{0}.cs'}"/>
-                <TextBox Grid.Row="2" Grid.Column="1" Margin="5 3" VerticalAlignment="Center" Text="{Binding ServiceName, UpdateSourceTrigger=PropertyChanged, StringFormat='{}{0}.cs'}"/>
+                <TextBox Grid.Row="0" Grid.Column="1" Text="{Binding ServiceFolder, UpdateSourceTrigger=PropertyChanged}"/>
+                <TextBox Grid.Row="1" Grid.Column="1" Text="{Binding ServiceInterfaceName, UpdateSourceTrigger=PropertyChanged, StringFormat='{}{0}.cs'}"/>
+                <TextBox Grid.Row="2" Grid.Column="1" Text="{Binding ServiceName, UpdateSourceTrigger=PropertyChanged, StringFormat='{}{0}.cs'}"/>
             </Grid>
         </GroupBox>
         <GroupBox Grid.Row="2" Header="Web View">
@@ -56,7 +60,7 @@
                     <ColumnDefinition/>
                 </Grid.ColumnDefinitions>
                 <TextBlock Grid.Row="0" Grid.Column="0" Text="Folder:" VerticalAlignment="Center" HorizontalAlignment="Right"/>
-                <TextBox Grid.Row="0" Grid.Column="1" Margin="5 3" Text="{Binding ViewFolder, UpdateSourceTrigger=PropertyChanged}"/>
+                <TextBox Grid.Row="0" Grid.Column="1" Text="{Binding ViewFolder, UpdateSourceTrigger=PropertyChanged}"/>
                 <TextBlock Grid.Row="1" Grid.Column="0" Text="View Files:" VerticalAlignment="Center" HorizontalAlignment="Right"/>
                 <DataGrid Grid.Row="1" Grid.Column="1" Margin="5 3" AutoGenerateColumns="False" ItemsSource="{Binding ViewFiles}" Height="100">
                     <DataGrid.Columns>
