@@ -1,19 +1,50 @@
 # ABPHelper
-ABPHelper is a Visual Studio Extension(VSIX) that helps you with developing ASP.NET Boilerplate applications.
-![](https://github.com/wakuflair/ABPHelper/blob/master/images/abphelper2.png?raw=true)
+ABPHelper is a Visual Studio Extension(VSIX) that helps you with developing [ASP.NET Boilerplate](https://aspnetboilerplate.com/) applications.
+![](Images/abphelper2.png)
 
 ## Installation
-You can install **ABPHelper** by using **Extensions and Updates** in Visual Studio. Or download it from [Visual Studio Gallery](https://visualstudiogallery.msdn.microsoft.com/15d33189-e63e-4ab4-9269-bc43200d7836) and install it manullay.
-![](https://github.com/wakuflair/ABPHelper/blob/master/images/abphelper1.png?raw=true)
+You can install **ABPHelper** by using **Extensions and Updates** in Visual Studio. Or download it from [Visual Studio Gallery](https://visualstudiogallery.msdn.microsoft.com/15d33189-e63e-4ab4-9269-bc43200d7836) and install it manually.
+![](Images/abphelper1.png)
 
 ## Using
 Once you installed **ABPHelper**, you can find it in **Views**->**Other Windows**->**ABPHelper**.
 
-By now, **ABPHelper** has one feature:
+**Features:**
+
+- **Generate Business**
+
+	In development using ABP, we usually need to create a group of related files: 
+
+	Application project
+
+	- IXXXAppService.cs, XXXAppservice.cs
+	- Dto folder
+
+	Web project
+
+	- index.cshtml
+	- index.js
+	- other popups...
+
+	I call this group of files "A business". Creating these files is trival and error-prone (maybe you forget to implement the ApplicationServiceBase, or you misspell the controller name).
+
+	Use **Generate Business** to help you:
+
+	![](Images/GenerateBusiness.png)
+
+	- Input the business name, like `Product`, other info will be auto-genereated. You can also change them manually.
+	- For folder fields, multi levels are supported.(like `TopFolder\SubFolder\Products`)
+	- In `View Files`, you can add a row by inputing in the bottom row of the grid; you can remove a row by press the <kbd>DELETE</kbd> key.
+	- then click **Generate** button(The first time generation maybe slow).
+
 
 - **Generate ApplicationService Methods**
 
-	Open an ApplicationService source code, then input methods names you want to generate in **Method Names** textbox(one name per line), check **Async Methods** if you wish, then click **Generate** button, **ABPHelper** will do following things:
+	Open an ApplicationService source code, then input methods names you want to generate in **Method Names** textbox(one name per line), check **Async Methods** if you wish.
+	
+	![](Images/GenerateServiceMethods.png)
+	
+	Then click **Generate** button, **ABPHelper** will do following things:
 
 	- All methods will be generated in current ApplicationService class file. 
 	- All methods will be generated in corresponding Interface file.
