@@ -85,6 +85,8 @@ namespace ABPHelper.Helper
                     Namespace = GetNamespace(parameter.ViewFolder),
                     FileName = viewFileViewModel.FileName,
                     IsPopup = viewFileViewModel.IsPopup,
+                    ViewFolder = parameter.ViewFolder,
+                    ViewFiles = parameter.ViewFiles,
                 };
                 foreach (var ext in new[] { ".cshtml", ".js" })
                 {
@@ -109,7 +111,7 @@ namespace ABPHelper.Helper
             var model = new ServiceFileModel()
             {
                 AppName = _appName,
-                Namespace = GetNamespace(parameter, folder),
+                Namespace = GetNamespace(parameter),
                 InterfaceName = parameter.ServiceInterfaceName,
                 ServiceName = parameter.ServiceName,
             };
@@ -123,17 +125,17 @@ namespace ABPHelper.Helper
             if (FindProjectItem(folder, fileName, ItemType.PhysicalFile) != null) return;
             var model = new ServiceInterfaceFileModel()
             {
-                Namespace = GetNamespace(parameter, folder),
+                Namespace = GetNamespace(parameter),
                 InterfaceName = parameter.ServiceInterfaceName,
             };
             string content = Engine.Razor.RunCompile("ServiceInterfaceFileTemplate", typeof(ServiceInterfaceFileModel), model);
             CreateAndAddFile(folder, fileName, content);
         }
 
-        private string GetNamespace(AddNewBusinessModel parameter, ProjectItem folder)
+        private string GetNamespace(AddNewBusinessModel parameter)
         {
             var str = parameter.ServiceFolder.Replace('\\', '.');
-            return $"{_appName}.{str}.{folder.Name}";
+            return $"{_appName}.{str}";
         }
 
         private ProjectItem AddDeepFolder(ProjectItems parentItems, string deepFolder)

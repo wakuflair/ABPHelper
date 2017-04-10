@@ -1,7 +1,5 @@
 ﻿@inherits RazorEngine.Templating.TemplateBase<ABPHelper.Models.TemplateModels.ViewFileModel>
-@{
-    var busiName = Model.BusinessName.Substring(0, 1).ToLower() + Model.BusinessName.Substring(1);
-}@if (Model.IsPopup)
+@if (Model.IsPopup)
 {
 <div>
     <form name="@(Model.FileName)Form" role="form" novalidate class="form-validation">

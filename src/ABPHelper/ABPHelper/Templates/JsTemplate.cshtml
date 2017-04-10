@@ -1,13 +1,67 @@
 ﻿@inherits RazorEngine.Templating.TemplateBase<ABPHelper.Models.TemplateModels.ViewFileModel>
+@functions
+{
+    private string LowerFirstChar(string str)
+    {
+        return str.Substring(0, 1).ToLower() + str.Substring(1);
+    }
+
+    private string UpperFirstChar(string str)
+    {
+        return str.Substring(0, 1).ToUpper() + str.Substring(1);
+    }
+}
 @{
     var fullName = Model.Namespace + "." + Model.FileName;
-    var busiName = Model.BusinessName.Substring(0, 1).ToLower() + Model.BusinessName.Substring(1);
+    var busiName = LowerFirstChar(Model.BusinessName);
     var modal = Model.IsPopup ? "$uibModalInstance" : "$uibModal";
 }(function() {
     angular.module('app').controller('@fullName', [
         '$scope', '@modal', 'abp.services.app.@busiName',
         function($scope, @modal, @(busiName)Service) {
             var vm = this;
+            @if (Model.IsPopup)
+            {
+            <text>
+            vm.save = function() {
+                @(busiName)Service.xxxxx(
+                ).then(function() {
+                    abp.notify.info(App.localize('SavedSuccessfully'));
+                    $uibModalInstance.close()
+                });
+            };
+
+            vm.cancel = function () {
+                $uibModalInstance.dismiss();
+            };
+            </text>
+            }
+            else
+            {
+                foreach (var viewFileViewModel in Model.ViewFiles)
+                {
+                    if (!viewFileViewModel.IsPopup)
+                    {
+                        continue;
+                    }
+            <text>
+            function open@(UpperFirstChar(viewFileViewModel.FileName))() {
+                var modalInstance = $uibModal.open({
+                    templateUrl: '@("/" + Model.ViewFolder.Replace('\\', '/') + "/" + viewFileViewModel.FileName + ".cshtml")',
+                    controller: '@(Model.Namespace + "." + viewFileViewModel.FileName) as vm',
+                    backdrop: 'static',
+                    resolve: {
+                        // add resolve function here
+                    }
+                });
+
+                modalInstance.result.then(function (result) {
+                    // call refresh here
+                });
+            }
+            </text>
+                }
+            }
         }
     ]);
 })();
