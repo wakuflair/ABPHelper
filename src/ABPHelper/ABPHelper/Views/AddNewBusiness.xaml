@@ -1,0 +1,75 @@
+﻿<UserControl x:Class="ABPHelper.Views.AddNewBusiness"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:ABPHelper.Views"
+             xmlns:viewModels="clr-namespace:ABPHelper.ViewModels"
+             mc:Ignorable="d" 
+             d:DesignHeight="320" d:DesignWidth="500">
+    <UserControl.DataContext>
+        <viewModels:AddNewBusinessViewModel/>
+    </UserControl.DataContext>
+    <UserControl.Resources>
+        <Style TargetType="TextBox">
+            <Setter Property="Height" Value="20"/>
+            <Setter Property="Width" Value="300"/>
+            <Setter Property="HorizontalAlignment" Value="Left"/>
+            <Setter Property="VerticalAlignment" Value="Center"/>
+            <Setter Property="Margin" Value="5 3 3 3"/>
+        </Style>
+    </UserControl.Resources>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+        <StackPanel Orientation="Horizontal" Grid.Row="0" Margin="3">
+            <TextBlock Text="Business Name:" Margin="6 3" VerticalAlignment="Center"/>
+            <TextBox Text="{Binding BusinessName, UpdateSourceTrigger=PropertyChanged}"/>
+        </StackPanel>
+        <GroupBox Grid.Row="1" Header="Application Service">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="80"/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+                <TextBlock Grid.Row="0" Grid.Column="0" Text="Folder:" VerticalAlignment="Center" HorizontalAlignment="Right"/>
+                <TextBlock Grid.Row="1" Grid.Column="0" Text="Interface File:" VerticalAlignment="Center" HorizontalAlignment="Right"/>
+                <TextBlock Grid.Row="2" Grid.Column="0" Text="Service File:" VerticalAlignment="Center" HorizontalAlignment="Right"/>
+                <TextBox Grid.Row="0" Grid.Column="1" Text="{Binding ServiceFolder, UpdateSourceTrigger=PropertyChanged}"/>
+                <TextBox Grid.Row="1" Grid.Column="1" Text="{Binding ServiceInterfaceName, UpdateSourceTrigger=PropertyChanged, StringFormat='{}{0}.cs'}"/>
+                <TextBox Grid.Row="2" Grid.Column="1" Text="{Binding ServiceName, UpdateSourceTrigger=PropertyChanged, StringFormat='{}{0}.cs'}"/>
+            </Grid>
+        </GroupBox>
+        <GroupBox Grid.Row="2" Header="Web View">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="80"/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+                <TextBlock Grid.Row="0" Grid.Column="0" Text="Folder:" VerticalAlignment="Center" HorizontalAlignment="Right"/>
+                <TextBox Grid.Row="0" Grid.Column="1" Text="{Binding ViewFolder, UpdateSourceTrigger=PropertyChanged}"/>
+                <TextBlock Grid.Row="1" Grid.Column="0" Text="View Files:" VerticalAlignment="Center" HorizontalAlignment="Right"/>
+                <DataGrid Grid.Row="1" Grid.Column="1" Margin="5 3" AutoGenerateColumns="False" ItemsSource="{Binding ViewFiles}" Height="100">
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Header="File Name" Width="120" Binding="{Binding FileName}"/>
+                        <DataGridCheckBoxColumn Header="Popup" Binding="{Binding IsPopup}"/>
+                    </DataGrid.Columns>
+                </DataGrid>
+            </Grid>
+        </GroupBox>
+        <Button Grid.Row="3" Content="Generate" Margin="3" HorizontalAlignment="Right" VerticalAlignment="Center" Command="{Binding GenerateCommand}"/>
+    </Grid>
+</UserControl>

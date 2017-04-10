@@ -2,6 +2,7 @@
 using System.Text.RegularExpressions;
 using System.Windows;
 using ABPHelper.Helper;
+using ABPHelper.Models.HelperModels;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.CommandWpf;
 
@@ -65,15 +66,18 @@ namespace ABPHelper.ViewModels
         private void ExecuteGenerateCommand()
         {
             var helper = new AddNewServiceMethodHelper(AbpHelperWindowControl.ServiceProvider);
-            var parameter = new Dictionary<string, object>();
             var names = Regex.Split(Names, @"\r\n");
 
-            if (HelperBase.MessageBox("{0} method{1} will be generated. OK?", MessageBoxButton.OKCancel, MessageBoxImage.Question, names.Length, (names.Length > 1 ? "s" : string.Empty)) == MessageBoxResult.Cancel)
+            if (Utils.MessageBox("{0} method{1} will be generated. OK?", MessageBoxButton.OKCancel, MessageBoxImage.Question, names.Length, (names.Length > 1 ? "s" : string.Empty)) == MessageBoxResult.Cancel)
             {
                 return;
             }
-            parameter["names"] = names;
-            parameter["async"] = IsAsync;
+
+            var parameter = new AddNewServiceMethodModel()
+            {
+                Names = names,
+                IsAsync = IsAsync,
+            };
 
             if (helper.CanExecute(parameter))
             {

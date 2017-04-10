@@ -1,6 +1,0 @@
-﻿namespace {0}.Dto
-{{
-	public class {1}{2} 
-	{{
-	}}
-}}

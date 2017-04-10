@@ -57,10 +57,26 @@
       <DependentUpon>AbpHelperWindowControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="AbpHelperWindowPackage.cs" />
+    <Compile Include="Extensions\StringExtensions.cs" />
+    <Compile Include="Helper\AddNewBusinessHelper.cs" />
     <Compile Include="Helper\AddNewServiceMethodHelper.cs" />
     <Compile Include="Helper\HelperBase.cs" />
+    <Compile Include="ItemType.cs" />
+    <Compile Include="Models\HelperModels\AddNewBusinessModel.cs" />
+    <Compile Include="Models\HelperModels\AddNewServiceMethodModel.cs" />
+    <Compile Include="Models\TemplateModels\ServiceFileModel.cs" />
+    <Compile Include="Models\TemplateModels\DtoFileModel.cs" />
+    <Compile Include="Models\TemplateModels\ServiceInterfaceFileModel.cs" />
+    <Compile Include="Models\TemplateModels\ViewFileModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="Templates\DtoTemplate.cshtml" />
+    <Compile Include="Templates\Template.cs" />
+    <Compile Include="Utils.cs" />
+    <Compile Include="ViewModels\AddNewBusinessViewModel.cs" />
     <Compile Include="ViewModels\AddNewServiceMethodViewModel.cs" />
+    <Compile Include="Views\AddNewBusiness.xaml.cs">
+      <DependentUpon>AddNewBusiness.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\AddNewServiceMethod.xaml.cs">
       <DependentUpon>AddNewServiceMethod.xaml</DependentUpon>
     </Compile>
@@ -71,11 +87,12 @@
     <None Include="source.extension.vsixmanifest">
       <SubType>Designer</SubType>
     </None>
+    <EmbeddedResource Include="Templates\ServiceFileTemplate.cshtml" />
+    <EmbeddedResource Include="Templates\ServiceInterfaceFileTemplate.cshtml" />
+    <EmbeddedResource Include="Templates\CshtmlTemplate.cshtml" />
+    <EmbeddedResource Include="Templates\JsTemplate.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Templates\DtoTemplate.txt">
-      <IncludeInVSIX>true</IncludeInVSIX>
-    </Content>
     <VSCTCompile Include="AbpHelperWindowPackage.vsct">
       <ResourceName>Menus.ctmenu</ResourceName>
     </VSCTCompile>
@@ -89,6 +106,10 @@
   </ItemGroup>
   <ItemGroup>
     <Page Include="AbpHelperWindowControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\AddNewBusiness.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -208,6 +229,10 @@
     </Reference>
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
+    <Reference Include="RazorEngine, Version=3.9.3.0, Culture=neutral, PublicKeyToken=9ee697374c7e744a, processorArchitecture=MSIL">
+      <HintPath>..\packages\RazorEngine.3.9.3\lib\net45\RazorEngine.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="stdole, Version=7.0.3300.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
       <EmbedInteropTypes>False</EmbedInteropTypes>
     </Reference>
@@ -215,6 +240,10 @@
     <Reference Include="System.Data" />
     <Reference Include="System.Design" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.Web.Razor, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.Razor.3.0.0\lib\net45\System.Web.Razor.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Windows.Interactivity, Version=4.5.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\MvvmLightLibs.5.3.0.0\lib\net45\System.Windows.Interactivity.dll</HintPath>

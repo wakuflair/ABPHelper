@@ -4,40 +4,51 @@
 // </copyright>
 //------------------------------------------------------------------------------
 
-using EnvDTE;
-using EnvDTE80;
+using System.Runtime.InteropServices;
+using ABPHelper.Templates;
+using Microsoft.VisualStudio.Shell;
+using RazorEngine;
+using RazorEngine.Configuration;
+using RazorEngine.Templating;
 
 namespace ABPHelper
 {
-    using System;
-    using System.Runtime.InteropServices;
-    using Microsoft.VisualStudio.Shell;
-
     /// <summary>
-    /// This class implements the tool window exposed by this package and hosts a user control.
+    ///     This class implements the tool window exposed by this package and hosts a user control.
     /// </summary>
     /// <remarks>
-    /// In Visual Studio tool windows are composed of a frame (implemented by the shell) and a pane,
-    /// usually implemented by the package implementer.
-    /// <para>
-    /// This class derives from the ToolWindowPane class provided from the MPF in order to use its
-    /// implementation of the IVsUIElementPane interface.
-    /// </para>
+    ///     In Visual Studio tool windows are composed of a frame (implemented by the shell) and a pane,
+    ///     usually implemented by the package implementer.
+    ///     <para>
+    ///         This class derives from the ToolWindowPane class provided from the MPF in order to use its
+    ///         implementation of the IVsUIElementPane interface.
+    ///     </para>
     /// </remarks>
     [Guid("cff10a46-bdbf-4562-9002-04e671268596")]
     public sealed class AbpHelperWindow : ToolWindowPane
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="AbpHelperWindow"/> class.
+        ///     Initializes a new instance of the <see cref="AbpHelperWindow" /> class.
         /// </summary>
         public AbpHelperWindow() : base(null)
         {
-            this.Caption = "AbpHelper";
+            Caption = "AbpHelper";
+
+            InitRazorEngine();
 
             // This is the user control hosted by the tool window; Note that, even if this class implements IDisposable,
             // we are not calling Dispose on this object. This is because ToolWindowPane calls Dispose on
             // the object returned by the Content property.
-            this.Content = new AbpHelperWindowControl(this);
+            Content = new AbpHelperWindowControl(this);
+        }
+
+        private void InitRazorEngine()
+        {
+            var config = new TemplateServiceConfiguration
+            {
+                TemplateManager = new EmbeddedResourceTemplateManager(typeof (Template))
+            };
+            Engine.Razor = RazorEngineService.Create(config);
         }
     }
 }
