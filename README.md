@@ -1,10 +1,10 @@
 # ABPHelper
 ABPHelper is a Visual Studio Extension(VSIX) that helps you with developing [ASP.NET Boilerplate](https://aspnetboilerplate.com/) applications.
-![](Images/abphelper2.png)
+![](images/abphelper2.png)
 
 ## Installation
 You can install **ABPHelper** by using **Extensions and Updates** in Visual Studio. Or download it from [Visual Studio Gallery](https://visualstudiogallery.msdn.microsoft.com/15d33189-e63e-4ab4-9269-bc43200d7836) and install it manually.
-![](Images/abphelper1.png)
+![](images/abphelper1.png)
 
 ## Using
 Once you installed **ABPHelper**, you can find it in **Views**->**Other Windows**->**ABPHelper**.
@@ -30,7 +30,7 @@ Once you installed **ABPHelper**, you can find it in **Views**->**Other Windows*
 
 	Use **Generate Business** to help you:
 
-	![](Images/GenerateBusiness.png)
+	![](images/GenerateBusiness.png)
 
 	- Input the business name, like `Product`, other info will be auto-genereated. You can also change them manually.
 	- For folder fields, multi levels are supported.(like `TopFolder\SubFolder\Products`)
@@ -41,8 +41,8 @@ Once you installed **ABPHelper**, you can find it in **Views**->**Other Windows*
 - **Generate ApplicationService Methods**
 
 	Open an ApplicationService source code, then input methods names you want to generate in **Method Names** textbox(one name per line), check **Async Methods** if you wish.
-	
-	![](Images/GenerateServiceMethods.png)
+
+	![](images/GenerateServiceMethods.png)
 	
 	Then click **Generate** button, **ABPHelper** will do following things:
 
