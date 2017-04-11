@@ -36,6 +36,8 @@ Once you installed **ABPHelper**, you can find it in **Views**->**Other Windows*
 	- For folder fields, multi levels are supported.(like `TopFolder\SubFolder\Products`)
 	- In `View Files`, you can add a row by inputing in the bottom row of the grid; you can remove a row by press the <kbd>DELETE</kbd> key.
 	- then click **Generate** button(The first time generation maybe slow).
+	
+	**NOTE** AbpHelper will skip generating exist files/folders.
 
 
 - **Generate ApplicationService Methods**
