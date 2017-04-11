@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <PackageManifest Version="2.0.0" xmlns="http://schemas.microsoft.com/developer/vsx-schema/2011" xmlns:d="http://schemas.microsoft.com/developer/vsx-schema-design/2011">
   <Metadata>
-    <Identity Id="ABPHelper.Microsoft.e5f47959-938f-4b10-8dc0-a2636e32efed" Version="1.5.2" Language="en-US" Publisher="wakuflair" />
+    <Identity Id="ABPHelper.Microsoft.e5f47959-938f-4b10-8dc0-a2636e32efed" Version="1.5.3" Language="en-US" Publisher="wakuflair" />
     <DisplayName>ABPHelper</DisplayName>
     <Description xml:space="preserve">ABPHelper is a Visual Studio Extension(VSIX) that helps you with developing ASP.NET Boilerplate applications.</Description>
     <MoreInfo>https://github.com/wakuflair/ABPHelper</MoreInfo>
