@@ -1,6 +1,7 @@
 ﻿using System;
 using System.IO;
 using System.Linq;
+using System.Text;
 using System.Windows;
 using ABPHelper.Models.TemplateModels;
 using EnvDTE;
@@ -29,7 +30,7 @@ namespace ABPHelper.Helper
             string path = Path.GetTempPath();
             Directory.CreateDirectory(path);
             string file = Path.Combine(path, fileName);
-            File.WriteAllText(file, content);
+            File.WriteAllText(file, content, Encoding.UTF8);
             try
             {
                 parentItem.ProjectItems.AddFromFileCopy(file);
