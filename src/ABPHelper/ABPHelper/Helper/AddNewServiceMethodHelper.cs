@@ -17,9 +17,15 @@ namespace ABPHelper.Helper
         private CodeClass _serviceClass;
         private CodeInterface _serviceInterface;
         private Document _document;
+        private readonly StatusBar _statusBar;
+
+        private int _steps;
+
+        private int _totalSteps;
 
         public AddNewServiceMethodHelper(IServiceProvider serviceProvider) : base(serviceProvider)
         {
+            _statusBar = Dte.StatusBar;
         }
 
         public override bool CanExecute(AddNewServiceMethodModel parameter)
@@ -49,6 +55,8 @@ namespace ABPHelper.Helper
 
         public override void Execute(AddNewServiceMethodModel parameter)
         {
+            _steps = 1;
+            _totalSteps = parameter.Names.Count()*2;
             foreach (string name in parameter.Names)
             {
                 try
@@ -60,6 +68,10 @@ namespace ABPHelper.Helper
                 catch (Exception e)
                 {
                     Utils.MessageBox("Generation failed.\r\nMethod name: {0}\r\nException: {1}", MessageBoxButton.OK, MessageBoxImage.Exclamation, name, e.Message);
+                }
+                finally
+                {
+                    _statusBar.Progress(false);
                 }
             }
             Utils.MessageBox("Done!");
@@ -122,19 +134,21 @@ namespace ABPHelper.Helper
 
         private void AddMethodToClass(CodeClass serviceClass, string name, bool async)
         {
+            _statusBar.Progress(true, $"Generating service method: {name}...", _steps++, _totalSteps);
             string parameter = $"{name}Input";
             var returnName = string.Format(async ? "Task<{0}Output>" : "{0}Output", name);
             var function = serviceClass.AddFunction(name, vsCMFunction.vsCMFunctionFunction, returnName, -1, vsCMAccess.vsCMAccessPublic);
             function.AddParameter("input", parameter);
             if (async)
             {
-                function.StartPoint.CreateEditPoint().ReplaceText(6, "public async", (int) vsEPReplaceTextOptions.vsEPReplaceTextAutoformat);
+                function.StartPoint.CreateEditPoint().ReplaceText(6, "public async", (int)vsEPReplaceTextOptions.vsEPReplaceTextAutoformat);
             }
-            function.GetStartPoint(vsCMPart.vsCMPartBody).CreateEditPoint().ReplaceText(0, "throw new System.NotImplementedException();", (int) vsEPReplaceTextOptions.vsEPReplaceTextAutoformat);
+            function.GetStartPoint(vsCMPart.vsCMPartBody).CreateEditPoint().ReplaceText(0, "throw new System.NotImplementedException();", (int)vsEPReplaceTextOptions.vsEPReplaceTextAutoformat);
         }
 
         private void AddMethodToInterface(CodeInterface serviceInterface, string name, bool async)
         {
+            _statusBar.Progress(true, $"Generating service interface: {name}...", _steps++, _totalSteps);
             string parameter = $"{name}Input";
             var returnName = string.Format(async ? "Task<{0}Output>" : "{0}Output", name);
             var function = serviceInterface.AddFunction(name, vsCMFunction.vsCMFunctionFunction, returnName, -1);
@@ -151,9 +165,9 @@ namespace ABPHelper.Helper
             }
 
             string nameSpace = GetNamespace(document.ProjectItem);
-            foreach (var str in new[] {"Input", "Output"})
+            foreach (var str in new[] { "Input", "Output" })
             {
-                var model = new DtoFileModel() {Namespace = nameSpace, Name = name, InputOrOutput = str};
+                var model = new DtoFileModel() { Namespace = nameSpace, Name = name, InputOrOutput = str };
                 string content = Engine.Razor.RunCompile("DtoTemplate", typeof(DtoFileModel), model);
                 string fileName = $"{name}{str}.cs";
                 try

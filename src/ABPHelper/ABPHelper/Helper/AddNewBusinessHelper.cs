@@ -1,10 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
 using System.Windows;
 using ABPHelper.Extensions;
-using ABPHelper.Models;
 using ABPHelper.Models.HelperModels;
 using ABPHelper.Models.TemplateModels;
 using EnvDTE;
@@ -19,11 +17,18 @@ namespace ABPHelper.Helper
 
         private Project _webProj;
 
-        private string _appName;
+        private readonly string _appName;
+
+        private StatusBar _statusBar;
+
+        private int _totalSteps;
+
+        private int _steps;
 
         public AddNewBusinessHelper(IServiceProvider serviceProvider) : base(serviceProvider)
         {
             _appName = Dte.Solution.Properties.Item("Name").Value.ToString();
+            _statusBar = Dte.StatusBar;
         }
 
         public override bool CanExecute(AddNewBusinessModel parameter)
@@ -60,6 +65,9 @@ namespace ABPHelper.Helper
         {
             try
             {
+                _totalSteps = parameter.ViewFiles.Count()*2 + 2;
+                _steps = 1;
+
                 var folder = AddDeepFolder(_appProj.ProjectItems, parameter.ServiceFolder);
                 AddDeepFolder(folder.ProjectItems, "Dto");
                 CreateServiceFile(parameter, folder);
@@ -73,24 +81,29 @@ namespace ABPHelper.Helper
             {
                 Utils.MessageBox("Generation failed.\r\nException: {0}", MessageBoxButton.OK, MessageBoxImage.Exclamation, e.Message);
             }
+            finally
+            {
+                _statusBar.Progress(false);
+            }
         }
 
         private void CreateViewFiles(AddNewBusinessModel parameter, ProjectItem folder)
         {
             foreach (var viewFileViewModel in parameter.ViewFiles)
             {
-                var model = new ViewFileModel()
+                var model = new ViewFileModel
                 {
                     BusinessName = parameter.BusinessName,
                     Namespace = GetNamespace(parameter.ViewFolder),
                     FileName = viewFileViewModel.FileName,
                     IsPopup = viewFileViewModel.IsPopup,
                     ViewFolder = parameter.ViewFolder,
-                    ViewFiles = parameter.ViewFiles,
+                    ViewFiles = parameter.ViewFiles
                 };
                 foreach (var ext in new[] { ".cshtml", ".js" })
                 {
                     var fileName = viewFileViewModel.FileName + ext;
+                    _statusBar.Progress(true, $"Generating view file: {fileName}", _steps++, _totalSteps);
                     if (FindProjectItem(folder, fileName, ItemType.PhysicalFile) != null) continue;
                     string content = Engine.Razor.RunCompile(ext == ".cshtml" ? "CshtmlTemplate" : "JsTemplate", typeof(ViewFileModel), model);
                     CreateAndAddFile(folder, fileName, content);
@@ -107,13 +120,14 @@ namespace ABPHelper.Helper
         private void CreateServiceFile(AddNewBusinessModel parameter, ProjectItem folder)
         {
             var fileName = parameter.ServiceName + ".cs";
+            _statusBar.Progress(true, $"Generating service file: {fileName}", _steps++, _totalSteps);
             if (FindProjectItem(folder, fileName, ItemType.PhysicalFile) != null) return;
-            var model = new ServiceFileModel()
+            var model = new ServiceFileModel
             {
                 AppName = _appName,
                 Namespace = GetNamespace(parameter),
                 InterfaceName = parameter.ServiceInterfaceName,
-                ServiceName = parameter.ServiceName,
+                ServiceName = parameter.ServiceName
             };
             string content = Engine.Razor.RunCompile("ServiceFileTemplate", typeof(ServiceFileModel), model);
             CreateAndAddFile(folder, fileName, content);
@@ -122,11 +136,12 @@ namespace ABPHelper.Helper
         private void CreateServiceInterfaceFile(AddNewBusinessModel parameter, ProjectItem folder)
         {
             var fileName = parameter.ServiceInterfaceName + ".cs";
+            _statusBar.Progress(true, $"Generating interface file: {fileName}", _steps++, _totalSteps);
             if (FindProjectItem(folder, fileName, ItemType.PhysicalFile) != null) return;
-            var model = new ServiceInterfaceFileModel()
+            var model = new ServiceInterfaceFileModel
             {
                 Namespace = GetNamespace(parameter),
-                InterfaceName = parameter.ServiceInterfaceName,
+                InterfaceName = parameter.ServiceInterfaceName
             };
             string content = Engine.Razor.RunCompile("ServiceInterfaceFileTemplate", typeof(ServiceInterfaceFileModel), model);
             CreateAndAddFile(folder, fileName, content);
