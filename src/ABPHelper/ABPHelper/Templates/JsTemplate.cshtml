@@ -24,10 +24,10 @@
             {
             <text>
             vm.save = function() {
-                @(busiName)Service.xxxxx(
+                @(busiName)Service.xxxxx(  // TODO: change to your service method
                 ).then(function() {
                     abp.notify.info(App.localize('SavedSuccessfully'));
-                    $uibModalInstance.close()
+                    $uibModalInstance.close();
                 });
             };
 
@@ -51,12 +51,12 @@
                     controller: '@(Model.Namespace + "." + viewFileViewModel.FileName) as vm',
                     backdrop: 'static',
                     resolve: {
-                        // add resolve function here
+                        // TODO: Add resolve function here
                     }
                 });
 
                 modalInstance.result.then(function (result) {
-                    // call refresh here
+                    // TODO: Call refresh here
                 });
             }
             </text>
