@@ -1,3 +1,5 @@
+For [ABP vNext](https://abp.io/), see the new [AbpHelper](https://github.com/EasyAbp/AbpHelper.CLI).
+
 # ABPHelper
 ABPHelper is a Visual Studio Extension(VSIX) that helps you with developing [ASP.NET Boilerplate](https://aspnetboilerplate.com/) applications.
 ![](images/abphelper2.png)
